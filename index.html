@@ -249,7 +249,7 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 23/8/2026, 6:10:40 pm
+  Updated 23/8/2026, 6:31:26 pm
 </footer>
 
 <script>
@@ -458,6 +458,7 @@
       while (d <= end) {
         const iso = toISO(d);
         const isHoliday = HOLIDAYS.includes(iso);
+        const finalCount = isHoliday ? 0 : t.count;
         expanded.push({
           date: iso,
           time: t.time,
@@ -465,9 +466,10 @@
           teachers: t.teachers,
           className: t.className,
           students: isHoliday ? [] : t.students,
-          count: isHoliday ? 0 : t.count,
+          count: finalCount,
           capacity: CAPACITY[t.studio] || null,
           holiday: isHoliday,
+          status: isHoliday ? "Cancelled" : (finalCount > 0 ? "Confirmed" : "Available"),
           classType: "Group"
         });
         d.setDate(d.getDate() + 7);
@@ -489,7 +491,6 @@
     return (row.teachers || '').toLowerCase().includes(teacher.toLowerCase());
   }
   function matchesStatus(row, status) {
-    if (row.classType !== "Private") return true;
     if (status === "all") return true;
     return row.status === status;
   }
@@ -560,21 +561,15 @@
       matchesSearch(r, searchTerm)
     );
 
-    const privateCount = allRows.filter(r => r.classType === "Private").length;
-    const groupCount = allRows.filter(r => r.classType === "Group").length;
-    const confirmed = allRows.filter(r => r.classType === "Private" && r.status === "Confirmed").length;
-    const tbc = allRows.filter(r => r.classType === "Private" && r.status === "TBC").length;
-    const available = allRows.filter(r => r.classType === "Private" && r.status === "Available").length;
+    const confirmed = allRows.filter(r => r.status === "Confirmed").length;
+    const tbc = allRows.filter(r => r.status === "TBC").length;
+    const available = allRows.filter(r => r.status === "Available").length;
 
-    let statsHtml = "<span><strong>" + allRows.length + "</strong> shown</span>";
-    if (currentClassType !== "Group") {
-      statsHtml += "<span><strong>" + confirmed + "</strong> confirmed</span>" +
-        "<span><strong>" + tbc + "</strong> TBC</span>" +
-        "<span><strong>" + available + "</strong> available</span>";
-    }
+    let statsHtml = "<span><strong>" + allRows.length + "</strong> shown</span>" +
+      "<span><strong>" + confirmed + "</strong> confirmed</span>" +
+      "<span><strong>" + tbc + "</strong> TBC</span>" +
+      "<span><strong>" + available + "</strong> available</span>";
     document.getElementById("stats").innerHTML = statsHtml;
-
-    document.getElementById("statusFilters").style.display = currentClassType === "Group" ? "none" : "flex";
 
     if (allRows.length === 0) {
       document.getElementById("list").innerHTML = '<div class="empty-state"><h3>No classes match</h3><p>Try changing the filters</p></div>';

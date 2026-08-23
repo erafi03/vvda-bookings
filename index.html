@@ -109,9 +109,19 @@
       color: var(--muted);
       background: #18181f;
       border-bottom: 1px solid var(--card-border);
+      flex-wrap: wrap;
     }
     .stats strong { color: var(--text); font-weight: 600; }
     .list { padding: 14px 12px 24px; }
+    .section-header {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 18px 6px 12px;
+      padding-top: 6px;
+    }
     .day-group { margin-bottom: 20px; }
     .day-header {
       font-size: 12px;
@@ -137,11 +147,32 @@
       border-color: rgba(34, 197, 94, 0.35);
       background: linear-gradient(135deg, #1e1e26 0%, #1a241e 100%);
     }
+    .card.holiday { opacity: 0.5; }
     .card-left { flex: 1; min-width: 0; }
     .time { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
     .meta { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
     .student { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .student.empty { color: var(--muted); font-weight: 400; font-style: italic; }
+    .class-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .student-list { list-style: none; padding: 0; margin: 0; }
+    .student-list li {
+      font-size: 14px;
+      color: var(--text);
+      padding: 3px 0 3px 14px;
+      position: relative;
+    }
+    .student-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    .holiday-note {
+      font-size: 12px;
+      color: var(--red);
+      margin-top: 8px;
+      font-style: italic;
+    }
     .badge {
       flex-shrink: 0;
       padding: 5px 11px;
@@ -159,6 +190,12 @@
     .badge.tbc { background: var(--amber-bg); color: var(--amber); }
     .badge.cancelled { background: var(--red-bg); color: var(--red); }
     .badge.available { background: var(--grey-bg); color: var(--muted); }
+    .badge.count {
+      background: var(--green-bg);
+      color: var(--green);
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
+    }
+    .badge.count.empty { background: var(--grey-bg); color: var(--muted); box-shadow: none; }
     .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
     .empty-state h3 { font-size: 17px; margin-bottom: 6px; color: var(--text); }
     footer {
@@ -199,10 +236,11 @@
 </div>
 
 <div class="filters" id="teacherFilters">
-  <button class="filter-btn active" data-teacher="all">All</button>
+  <button class="filter-btn active" data-teacher="all">All Teachers</button>
   <button class="filter-btn" data-teacher="Venus">Venus</button>
   <button class="filter-btn" data-teacher="Boniface">Boniface</button>
   <button class="filter-btn" data-teacher="Hernan">Hernan</button>
+  <button class="filter-btn" data-teacher="Kike">Kike</button>
 </div>
 
 <div class="status-filters" id="statusFilters">
@@ -221,11 +259,11 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 22/8/2026, 2:02:05 pm
+  Updated 23/8/2026, 5:49:27 pm
 </footer>
 
 <script>
-  const allRows = [
+  const privateRows = [
     {date:'2026-08-17',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
     {date:'2026-08-18',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
     {date:'2026-08-19',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
@@ -373,6 +411,40 @@
     {date:'2026-12-19',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
     {date:'2026-12-20',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'}
   ];
+  const groupRows = [
+    {day:'Mon',time:'16:30-18:00',studio:'Juliet',teachers:'Venus / Boniface',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Melody","Michelle Lee","Miyu","Scarlet Georgia Lam","Victoria Phan"],count:6,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
+    {day:'Mon',time:'17:30-19:00',studio:'Giselle',teachers:'Boniface / Hernan',className:'Level 1 & 2 - Ballet Class',students:["Evelyn Tsz Yin Lam","Kisaki Kikkawa","Shiki Kikkawa"],count:3,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
+    {day:'Mon',time:'18:00-19:00',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Pointe Class',students:["Michelle lee","Miyu","Victoria Phan"],count:3,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
+    {day:'Mon',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle lee","Miyu"],count:3,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
+    {day:'Tue',time:'16:30-17:30',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Hana Ko"],count:1,holidayNote:'',classType:'Group'},
+    {day:'Tue',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Melody CAI","Michelle lee","Miyu","Ngai Huen"],count:5,holidayNote:'',classType:'Group'},
+    {day:'Tue',time:'17:30-19:00',studio:'Giselle',teachers:'Hernan',className:'Level 1 & 2 - Ballet Class',students:["Amber Chen","Lia Loizou"],count:2,holidayNote:'',classType:'Group'},
+    {day:'Tue',time:'18:00-19:00',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Melody CAI","Michelle Lee","Miyu","Ngai Huen"],count:4,holidayNote:'',classType:'Group'},
+    {day:'Tue',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu"],count:3,holidayNote:'',classType:'Group'},
+    {day:'Wed',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',className:'Private - Ballet/Pas de Deux',students:["Cheryl Sum Yu Cheng"],count:1,holidayNote:'',classType:'Group'},
+    {day:'Wed',time:'17:00-18:30',studio:'Giselle',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Hannah Walker","Michelle Lee","Miyu","harper"],count:5,holidayNote:'',classType:'Group'},
+    {day:'Wed',time:'17:00-18:30',studio:'Juliet',teachers:'Venus Villa',className:'Level 1 & 2 - Ballet Class',students:["Alicia Chung","Amber Chen","Audrey Au","Cheryl Sum Yu Cheng","Emma kuni","Evelyn Tsz Yin Lam","Hayley Wan","Kisaki Kikkawa","Shiki Kikkawa"],count:9,holidayNote:'',classType:'Group'},
+    {day:'Wed',time:'18:30-19:30',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Cheryl Sum Yu Cheng","Hannah Walker","Miyu","harper"],count:4,holidayNote:'',classType:'Group'},
+    {day:'Wed',time:'18:30-19:30',studio:'Giselle',teachers:'Hernan',className:'Level 1,2&3 - Contemporary Basics',students:["Eugene Chan","Michelle Lee"],count:2,holidayNote:'',classType:'Group'},
+    {day:'Wed',time:'19:30-21:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu","Ngai Huen","harper"],count:5,holidayNote:'',classType:'Group'},
+    {day:'Thu',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Hale Ho","Miyu","Sophia"],count:4,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
+    {day:'Thu',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Alejandra Duffo","Audrey","Bethany Rachelle Luing","Francesca Lumsdaine","Sophia Yu","Sophia Zhang"],count:6,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
+    {day:'Thu',time:'18:00-19:00',studio:'Juliet + Giselle',teachers:'Boniface / Venus',className:'All Levels - Conditioning',students:["Eugene Chan","Miyu"],count:2,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
+    {day:'Thu',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Boniface',className:'All Levels - Variations',students:["Eugene Chan","Melody CAI","Miyu"],count:3,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
+    {day:'Fri',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface Ho',className:'Baby - Ballet Class',students:["Hailey He","Lily Abercromby"],count:2,holidayNote:'',classType:'Group'},
+    {day:'Fri',time:'16:30-18:00',studio:'Juliet',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Harper","Michelle Lee","Miyu","Sophia Bennett"],count:5,holidayNote:'',classType:'Group'},
+    {day:'Fri',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Level 1 & 2 - Ballet Class',students:["Diana","Emma Kuni","Lia Loizou"],count:3,holidayNote:'',classType:'Group'},
+    {day:'Fri',time:'18:00-19:00',studio:'Juliet',teachers:'Kike / Hernan',className:'Level 2, 3 & 6 - Contemporary',students:["Harper","Michelle Lee","Miyu"],count:3,holidayNote:'',classType:'Group'},
+    {day:'Fri',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Amber Chen","Eugene Chan","Michelle Lee","Miyu"],count:4,holidayNote:'',classType:'Group'},
+    {day:'Sat',time:'10:00-11:30',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Ballet Class',students:["Amber Chen","Melody CAI","Michelle lee","Miyu","Ngai Huen","Sakura Falipou","Scarlet Georgia Lam","Sophia","Victoria Phan","harper"],count:10,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
+    {day:'Sat',time:'11:30-12:30',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Amber Chen","Melody CAI","Michelle lee","Miyu","Sakura Falipou","Sophia","Victoria Phan","harper"],count:8,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
+    {day:'Sat',time:'12:30-14:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Conditioning',students:["Alejandra Duffo","Amber Chen","Kisaki Kikkawa","Melody CAI","Michelle lee","Miyu","Sakura Falipou","Scarlet Georgia Lam","Shiki Kikkawa","harper"],count:10,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
+    {day:'Sat',time:'14:00-15:00',studio:'Juliet',teachers:'Boniface / Hernan',className:'Level 1 - Ballet Class',students:["Alejandra Duffo"],count:1,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
+    {day:'Sat',time:'15:00-17:00',studio:'Juliet',teachers:'Kike Perez',className:'Level 2, 3 & 6 - Contemporary',students:["Melody CAI","Miyu"],count:2,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
+    {day:'Sun',time:'11:00-12:30',studio:'Juliet + Giselle',teachers:'Hernan',className:'Level 1, 2 & 3 - Ballet Class',students:["Michelle lee","Victoria Phan"],count:2,holidayNote:'',classType:'Group'},
+    {day:'Sun',time:'12:30-14:00',studio:'Juliet + Giselle',teachers:'Hernan',className:'All Levels - Conditioning',students:["Emma Kuni","Michelle lee","Victoria Phan"],count:3,holidayNote:'',classType:'Group'},
+    {day:'Sun',time:'14:00-15:00',studio:'Juliet + Giselle',teachers:'Hernan',className:'All Levels - Variations',students:["Emma kuni","Michelle lee"],count:2,holidayNote:'',classType:'Group'}
+  ];
 
   let currentTeacher = "all";
   let currentStatus = "all";
@@ -382,23 +454,24 @@
 
   function matchesTeacher(row, teacher) {
     if (teacher === "all") return true;
-    return row.teachers.toLowerCase().includes(teacher.toLowerCase());
+    return (row.teachers || '').toLowerCase().includes(teacher.toLowerCase());
   }
   function matchesStatus(row, status) {
     if (status === "all") return true;
-    return row.status.toLowerCase() === status.toLowerCase();
+    return row.status === status;
   }
   function matchesMonth(row, month) {
     if (month === "all") return true;
     return row.date.substring(5, 7) === month;
   }
-  function matchesClassType(row, classType) {
-    if (classType === "all") return true;
-    return row.classType.toLowerCase() === classType.toLowerCase();
-  }
-  function matchesSearch(row, term) {
+  function matchesSearchPrivate(row, term) {
     if (!term) return true;
-    return row.student.toLowerCase().includes(term.toLowerCase());
+    return (row.student || '').toLowerCase().includes(term.toLowerCase());
+  }
+  function matchesSearchGroup(row, term) {
+    if (!term) return true;
+    if ((row.className || '').toLowerCase().includes(term.toLowerCase())) return true;
+    return (row.students || []).some(s => s.toLowerCase().includes(term.toLowerCase()));
   }
   function formatDate(iso) {
     const d = new Date(iso + "T12:00:00");
@@ -406,43 +479,22 @@
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     return days[d.getDay()] + " " + d.getDate() + " " + months[d.getMonth()];
   }
+  const dayOrder = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
+  const dayFull = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };
 
-  function render() {
-    const filtered = allRows.filter(r =>
-      matchesTeacher(r, currentTeacher) &&
-      matchesStatus(r, currentStatus) &&
-      matchesMonth(r, currentMonth) &&
-      matchesClassType(r, currentClassType) &&
-      matchesSearch(r, searchTerm)
-    );
-
-    const confirmed = filtered.filter(r => r.status === "Confirmed").length;
-    const tbc = filtered.filter(r => r.status === "TBC").length;
-    const available = filtered.filter(r => r.status === "Available").length;
-
-    document.getElementById("stats").innerHTML =
-      "<span><strong>" + filtered.length + "</strong> shown</span>" +
-      "<span><strong>" + confirmed + "</strong> confirmed</span>" +
-      "<span><strong>" + tbc + "</strong> TBC</span>" +
-      "<span><strong>" + available + "</strong> available</span>";
-
-    if (filtered.length === 0) {
-      document.getElementById("list").innerHTML = '<div class="empty-state"><h3>No classes match</h3><p>Try changing the filters</p></div>';
-      return;
-    }
-
+  function renderPrivateSection(rows) {
+    if (rows.length === 0) return '';
     const groups = {};
-    filtered.forEach(r => {
+    rows.forEach(r => {
       if (!groups[r.date]) groups[r.date] = [];
       groups[r.date].push(r);
     });
-
     const sortedDates = Object.keys(groups).sort();
-    let html = "";
+    let html = '<div class="section-header">Private Classes</div>';
     sortedDates.forEach(date => {
       html += '<div class="day-group"><div class="day-header">' + formatDate(date) + '</div>';
       groups[date].forEach(r => {
-        const statusClass = r.status.toLowerCase();
+        const statusClass = (r.status || '').toLowerCase();
         const isEmpty = !r.student;
         const cardExtra = statusClass === "confirmed" ? " confirmed" : (statusClass === "available" ? " available" : "");
         html += '<div class="card' + cardExtra + '">' +
@@ -457,7 +509,86 @@
       });
       html += '</div>';
     });
-    document.getElementById("list").innerHTML = html;
+    return html;
+  }
+
+  function renderGroupSection(rows) {
+    if (rows.length === 0) return '';
+    const sorted = [...rows].sort((a, b) => (dayOrder[a.day] - dayOrder[b.day]) || a.time.localeCompare(b.time));
+    const groups = {};
+    sorted.forEach(r => {
+      if (!groups[r.day]) groups[r.day] = [];
+      groups[r.day].push(r);
+    });
+    let html = '<div class="section-header">Group Classes</div>';
+    Object.keys(groups).sort((a, b) => dayOrder[a] - dayOrder[b]).forEach(day => {
+      html += '<div class="day-group"><div class="day-header">' + dayFull[day] + '</div>';
+      groups[day].forEach(r => {
+        const isEmpty = r.count === 0;
+        const cardExtra = r.holidayNote ? " holiday" : (r.count > 0 ? " confirmed" : " available");
+        const studentListHtml = r.students && r.students.length
+          ? '<ul class="student-list">' + r.students.map(s => '<li>' + s + '</li>').join('') + '</ul>'
+          : '<div class="student empty">— no students —</div>';
+        html += '<div class="card' + cardExtra + '">' +
+          '<div class="card-left">' +
+            '<div class="time">' + r.time + ' · ' + r.studio + '</div>' +
+            '<div class="meta">' + r.teachers + '</div>' +
+            '<div class="class-name">' + r.className + '</div>' +
+            studentListHtml +
+            (r.holidayNote ? '<div class="holiday-note">' + r.holidayNote + '</div>' : '') +
+          '</div>' +
+          '<div class="badge count' + (isEmpty ? ' empty' : '') + '">' + r.count + ' booked</div>' +
+        '</div>';
+      });
+      html += '</div>';
+    });
+    return html;
+  }
+
+  function render() {
+    const filteredPrivate = privateRows.filter(r =>
+      matchesTeacher(r, currentTeacher) &&
+      matchesStatus(r, currentStatus) &&
+      matchesMonth(r, currentMonth) &&
+      matchesSearchPrivate(r, searchTerm)
+    );
+    const filteredGroup = groupRows.filter(r =>
+      matchesTeacher(r, currentTeacher) &&
+      matchesSearchGroup(r, searchTerm)
+    );
+
+    const showPrivate = currentClassType === "all" || currentClassType === "Private";
+    const showGroup = currentClassType === "all" || currentClassType === "Group";
+
+    const confirmed = filteredPrivate.filter(r => r.status === "Confirmed").length;
+    const tbc = filteredPrivate.filter(r => r.status === "TBC").length;
+    const available = filteredPrivate.filter(r => r.status === "Available").length;
+    const totalGroupStudents = filteredGroup.reduce((sum, r) => sum + r.count, 0);
+
+    let statsHtml = '';
+    if (showPrivate) {
+      statsHtml += "<span><strong>" + filteredPrivate.length + "</strong> private shown</span>" +
+        "<span><strong>" + confirmed + "</strong> confirmed</span>" +
+        "<span><strong>" + tbc + "</strong> TBC</span>" +
+        "<span><strong>" + available + "</strong> available</span>";
+    }
+    if (showGroup) {
+      statsHtml += "<span><strong>" + filteredGroup.length + "</strong> group classes</span>" +
+        "<span><strong>" + totalGroupStudents + "</strong> group students</span>";
+    }
+    document.getElementById("stats").innerHTML = statsHtml;
+
+    document.getElementById("monthFilters").style.display = showPrivate ? "flex" : "none";
+    document.getElementById("statusFilters").style.display = showPrivate ? "flex" : "none";
+
+    let listHtml = '';
+    if (showGroup) listHtml += renderGroupSection(filteredGroup);
+    if (showPrivate) listHtml += renderPrivateSection(filteredPrivate);
+
+    if (!listHtml) {
+      listHtml = '<div class="empty-state"><h3>No classes match</h3><p>Try changing the filters</p></div>';
+    }
+    document.getElementById("list").innerHTML = listHtml;
   }
 
   document.getElementById("classTypeFilters").addEventListener("click", e => {

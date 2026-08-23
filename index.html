@@ -113,15 +113,6 @@
     }
     .stats strong { color: var(--text); font-weight: 600; }
     .list { padding: 14px 12px 24px; }
-    .section-header {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin: 18px 6px 12px;
-      padding-top: 6px;
-    }
     .day-group { margin-bottom: 20px; }
     .day-header {
       font-size: 12px;
@@ -147,14 +138,13 @@
       border-color: rgba(34, 197, 94, 0.35);
       background: linear-gradient(135deg, #1e1e26 0%, #1a241e 100%);
     }
-    .card.holiday { opacity: 0.5; }
+    .card.holiday { opacity: 0.45; }
     .card-left { flex: 1; min-width: 0; }
     .time { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
     .meta { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
     .student { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .student.empty { color: var(--muted); font-weight: 400; font-style: italic; }
-    .class-name { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-    .student-list { list-style: none; padding: 0; margin: 0; }
+    .student-list { list-style: none; padding: 0; margin: 4px 0 0; }
     .student-list li {
       font-size: 14px;
       color: var(--text);
@@ -170,7 +160,7 @@
     .holiday-note {
       font-size: 12px;
       color: var(--red);
-      margin-top: 8px;
+      margin-top: 6px;
       font-style: italic;
     }
     .badge {
@@ -259,192 +249,234 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 23/8/2026, 5:49:27 pm
+  Updated 23/8/2026, 6:10:40 pm
 </footer>
 
 <script>
   const privateRows = [
-    {date:'2026-08-17',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-18',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-19',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-08-20',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-21',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-22',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-22',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-23',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-24',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-25',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-26',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-08-27',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-28',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-28',day:'Friday',time:'18:00-19:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'Amber (Kuo)',status:'Confirmed',notes:'Graduation Ball Variation',classType:'Private'},
-    {date:'2026-08-29',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-29',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-30',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-08-31',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-01',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-02',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-09-03',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-04',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-04',day:'Friday',time:'18:00-19:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'Amber (Kuo)',status:'Confirmed',notes:'Graduation Ball Variation',classType:'Private'},
-    {date:'2026-09-05',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-05',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-06',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-07',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-08',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-09',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-09-10',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-11',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-12',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-12',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-13',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-14',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-15',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-16',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-09-17',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-18',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-19',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-19',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-20',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-21',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-22',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-23',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-09-24',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-25',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-26',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-26',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-27',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-28',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-29',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-09-30',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-10-01',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-02',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-03',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-03',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-04',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-05',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-06',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-07',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-10-08',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-09',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-10',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-10',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-11',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-12',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-13',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-14',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-10-15',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-16',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-17',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-17',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-18',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-19',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-20',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-21',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-10-22',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-23',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-24',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-24',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-25',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-26',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-27',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-28',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-10-29',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-30',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-31',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-10-31',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-01',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-02',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-03',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-04',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-11-05',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-06',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-07',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-07',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-08',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-09',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-10',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-11',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-11-12',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-13',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-14',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-14',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-15',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-16',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-17',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-18',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-11-19',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-20',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-21',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-21',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-22',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-23',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-24',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-25',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-11-26',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-27',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-28',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-28',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-29',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-11-30',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-01',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-02',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-12-03',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-04',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-05',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-05',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-06',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-07',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-08',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-09',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-12-10',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-11',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-12',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-12',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-13',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-14',day:'Monday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-15',day:'Tuesday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-16',day:'Wednesday',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
-    {date:'2026-12-17',day:'Thursday',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-18',day:'Friday',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-19',day:'Saturday',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-19',day:'Saturday',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
-    {date:'2026-12-20',day:'Sunday',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'}
+    {date:'2026-08-17',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-18',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-19',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-08-20',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-21',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-22',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-22',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-23',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-24',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-25',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-26',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-08-27',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-28',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-28',time:'18:00-19:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'Amber (Kuo)',status:'Confirmed',notes:'Graduation Ball Variation',classType:'Private'},
+    {date:'2026-08-29',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-29',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-30',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-08-31',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-01',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-02',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-09-03',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-04',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-04',time:'18:00-19:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'Amber (Kuo)',status:'Confirmed',notes:'Graduation Ball Variation',classType:'Private'},
+    {date:'2026-09-05',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-05',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-06',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-07',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-08',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-09',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-09-10',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-11',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-12',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-12',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-13',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-14',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-15',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-16',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-09-17',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-18',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-19',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-19',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-20',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-21',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-22',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-23',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-09-24',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-25',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-26',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-26',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-27',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-28',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-29',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-09-30',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-10-01',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-02',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-03',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-03',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-04',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-05',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-06',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-07',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-10-08',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-09',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-10',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-10',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-11',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-12',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-13',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-14',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-10-15',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-16',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-17',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-17',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-18',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-19',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-20',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-21',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-10-22',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-23',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-24',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-24',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-25',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-26',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-27',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-28',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-10-29',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-30',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-31',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-10-31',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-01',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-02',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-03',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-04',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-11-05',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-06',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-07',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-07',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-08',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-09',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-10',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-11',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-11-12',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-13',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-14',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-14',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-15',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-16',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-17',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-18',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-11-19',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-20',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-21',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-21',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-22',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-23',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-24',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-25',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-11-26',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-27',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-28',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-28',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-29',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-11-30',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-01',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-02',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-12-03',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-04',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-05',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-05',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-06',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-07',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-08',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-09',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-12-10',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-11',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-12',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-12',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-13',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-14',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-15',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan / Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-16',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',student:'Cheryl (Vivian)',status:'Confirmed',notes:'',classType:'Private'},
+    {date:'2026-12-17',time:'15:30-16:30',studio:'Juliet',teachers:'Venus',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-18',time:'15:30-16:30',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-19',time:'14:00-15:00',studio:'Giselle',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-19',time:'15:00-16:00',studio:'Giselle',teachers:'Hernan / Boniface',student:'',status:'Available',notes:'',classType:'Private'},
+    {date:'2026-12-20',time:'15:00-16:00',studio:'Juliet',teachers:'Hernan',student:'',status:'Available',notes:'',classType:'Private'}
   ];
-  const groupRows = [
-    {day:'Mon',time:'16:30-18:00',studio:'Juliet',teachers:'Venus / Boniface',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Melody","Michelle Lee","Miyu","Scarlet Georgia Lam","Victoria Phan"],count:6,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
-    {day:'Mon',time:'17:30-19:00',studio:'Giselle',teachers:'Boniface / Hernan',className:'Level 1 & 2 - Ballet Class',students:["Evelyn Tsz Yin Lam","Kisaki Kikkawa","Shiki Kikkawa"],count:3,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
-    {day:'Mon',time:'18:00-19:00',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Pointe Class',students:["Michelle lee","Miyu","Victoria Phan"],count:3,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
-    {day:'Mon',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle lee","Miyu"],count:3,holidayNote:'No class 19 Oct — Public Holiday',classType:'Group'},
-    {day:'Tue',time:'16:30-17:30',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Hana Ko"],count:1,holidayNote:'',classType:'Group'},
-    {day:'Tue',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Melody CAI","Michelle lee","Miyu","Ngai Huen"],count:5,holidayNote:'',classType:'Group'},
-    {day:'Tue',time:'17:30-19:00',studio:'Giselle',teachers:'Hernan',className:'Level 1 & 2 - Ballet Class',students:["Amber Chen","Lia Loizou"],count:2,holidayNote:'',classType:'Group'},
-    {day:'Tue',time:'18:00-19:00',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Melody CAI","Michelle Lee","Miyu","Ngai Huen"],count:4,holidayNote:'',classType:'Group'},
-    {day:'Tue',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu"],count:3,holidayNote:'',classType:'Group'},
-    {day:'Wed',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',className:'Private - Ballet/Pas de Deux',students:["Cheryl Sum Yu Cheng"],count:1,holidayNote:'',classType:'Group'},
-    {day:'Wed',time:'17:00-18:30',studio:'Giselle',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Hannah Walker","Michelle Lee","Miyu","harper"],count:5,holidayNote:'',classType:'Group'},
-    {day:'Wed',time:'17:00-18:30',studio:'Juliet',teachers:'Venus Villa',className:'Level 1 & 2 - Ballet Class',students:["Alicia Chung","Amber Chen","Audrey Au","Cheryl Sum Yu Cheng","Emma kuni","Evelyn Tsz Yin Lam","Hayley Wan","Kisaki Kikkawa","Shiki Kikkawa"],count:9,holidayNote:'',classType:'Group'},
-    {day:'Wed',time:'18:30-19:30',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Cheryl Sum Yu Cheng","Hannah Walker","Miyu","harper"],count:4,holidayNote:'',classType:'Group'},
-    {day:'Wed',time:'18:30-19:30',studio:'Giselle',teachers:'Hernan',className:'Level 1,2&3 - Contemporary Basics',students:["Eugene Chan","Michelle Lee"],count:2,holidayNote:'',classType:'Group'},
-    {day:'Wed',time:'19:30-21:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu","Ngai Huen","harper"],count:5,holidayNote:'',classType:'Group'},
-    {day:'Thu',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Hale Ho","Miyu","Sophia"],count:4,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
-    {day:'Thu',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Alejandra Duffo","Audrey","Bethany Rachelle Luing","Francesca Lumsdaine","Sophia Yu","Sophia Zhang"],count:6,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
-    {day:'Thu',time:'18:00-19:00',studio:'Juliet + Giselle',teachers:'Boniface / Venus',className:'All Levels - Conditioning',students:["Eugene Chan","Miyu"],count:2,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
-    {day:'Thu',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Boniface',className:'All Levels - Variations',students:["Eugene Chan","Melody CAI","Miyu"],count:3,holidayNote:'No class 1 Oct — Public Holiday',classType:'Group'},
-    {day:'Fri',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface Ho',className:'Baby - Ballet Class',students:["Hailey He","Lily Abercromby"],count:2,holidayNote:'',classType:'Group'},
-    {day:'Fri',time:'16:30-18:00',studio:'Juliet',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Harper","Michelle Lee","Miyu","Sophia Bennett"],count:5,holidayNote:'',classType:'Group'},
-    {day:'Fri',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Level 1 & 2 - Ballet Class',students:["Diana","Emma Kuni","Lia Loizou"],count:3,holidayNote:'',classType:'Group'},
-    {day:'Fri',time:'18:00-19:00',studio:'Juliet',teachers:'Kike / Hernan',className:'Level 2, 3 & 6 - Contemporary',students:["Harper","Michelle Lee","Miyu"],count:3,holidayNote:'',classType:'Group'},
-    {day:'Fri',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Amber Chen","Eugene Chan","Michelle Lee","Miyu"],count:4,holidayNote:'',classType:'Group'},
-    {day:'Sat',time:'10:00-11:30',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Ballet Class',students:["Amber Chen","Melody CAI","Michelle lee","Miyu","Ngai Huen","Sakura Falipou","Scarlet Georgia Lam","Sophia","Victoria Phan","harper"],count:10,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
-    {day:'Sat',time:'11:30-12:30',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Amber Chen","Melody CAI","Michelle lee","Miyu","Sakura Falipou","Sophia","Victoria Phan","harper"],count:8,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
-    {day:'Sat',time:'12:30-14:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Conditioning',students:["Alejandra Duffo","Amber Chen","Kisaki Kikkawa","Melody CAI","Michelle lee","Miyu","Sakura Falipou","Scarlet Georgia Lam","Shiki Kikkawa","harper"],count:10,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
-    {day:'Sat',time:'14:00-15:00',studio:'Juliet',teachers:'Boniface / Hernan',className:'Level 1 - Ballet Class',students:["Alejandra Duffo"],count:1,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
-    {day:'Sat',time:'15:00-17:00',studio:'Juliet',teachers:'Kike Perez',className:'Level 2, 3 & 6 - Contemporary',students:["Melody CAI","Miyu"],count:2,holidayNote:'No class 26 Sep — Public Holiday',classType:'Group'},
-    {day:'Sun',time:'11:00-12:30',studio:'Juliet + Giselle',teachers:'Hernan',className:'Level 1, 2 & 3 - Ballet Class',students:["Michelle lee","Victoria Phan"],count:2,holidayNote:'',classType:'Group'},
-    {day:'Sun',time:'12:30-14:00',studio:'Juliet + Giselle',teachers:'Hernan',className:'All Levels - Conditioning',students:["Emma Kuni","Michelle lee","Victoria Phan"],count:3,holidayNote:'',classType:'Group'},
-    {day:'Sun',time:'14:00-15:00',studio:'Juliet + Giselle',teachers:'Hernan',className:'All Levels - Variations',students:["Emma kuni","Michelle lee"],count:2,holidayNote:'',classType:'Group'}
+  const groupTemplates = [
+    {day:'Mon',time:'16:30-18:00',studio:'Juliet',teachers:'Venus / Boniface',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Melody","Michelle Lee","Miyu","Scarlet Georgia Lam","Victoria Phan"],count:6},
+    {day:'Mon',time:'17:30-19:00',studio:'Giselle',teachers:'Boniface / Hernan',className:'Level 1 & 2 - Ballet Class',students:["Evelyn Tsz Yin Lam","Kisaki Kikkawa","Shiki Kikkawa"],count:3},
+    {day:'Mon',time:'18:00-19:00',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Pointe Class',students:["Michelle lee","Miyu","Victoria Phan"],count:3},
+    {day:'Mon',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle lee","Miyu"],count:3},
+    {day:'Tue',time:'16:30-17:30',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Hana Ko"],count:1},
+    {day:'Tue',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Melody CAI","Michelle lee","Miyu","Ngai Huen"],count:5},
+    {day:'Tue',time:'17:30-19:00',studio:'Giselle',teachers:'Hernan',className:'Level 1 & 2 - Ballet Class',students:["Amber Chen","Lia Loizou"],count:2},
+    {day:'Tue',time:'18:00-19:00',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Melody CAI","Michelle Lee","Miyu","Ngai Huen"],count:4},
+    {day:'Tue',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu"],count:3},
+    {day:'Wed',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',className:'Private - Ballet/Pas de Deux',students:["Cheryl Sum Yu Cheng"],count:1},
+    {day:'Wed',time:'17:00-18:30',studio:'Giselle',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Hannah Walker","Michelle Lee","Miyu","harper"],count:5},
+    {day:'Wed',time:'17:00-18:30',studio:'Juliet',teachers:'Venus Villa',className:'Level 1 & 2 - Ballet Class',students:["Alicia Chung","Amber Chen","Audrey Au","Cheryl Sum Yu Cheng","Emma kuni","Evelyn Tsz Yin Lam","Hayley Wan","Kisaki Kikkawa","Shiki Kikkawa"],count:9},
+    {day:'Wed',time:'18:30-19:30',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Cheryl Sum Yu Cheng","Hannah Walker","Miyu","harper"],count:4},
+    {day:'Wed',time:'18:30-19:30',studio:'Giselle',teachers:'Hernan',className:'Level 1,2&3 - Contemporary Basics',students:["Eugene Chan","Michelle Lee"],count:2},
+    {day:'Wed',time:'19:30-21:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu","Ngai Huen","harper"],count:5},
+    {day:'Thu',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Hale Ho","Miyu","Sophia"],count:4},
+    {day:'Thu',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Alejandra Duffo","Audrey","Bethany Rachelle Luing","Francesca Lumsdaine","Sophia Yu","Sophia Zhang"],count:6},
+    {day:'Thu',time:'18:00-19:00',studio:'Juliet + Giselle',teachers:'Boniface / Venus',className:'All Levels - Conditioning',students:["Eugene Chan","Miyu"],count:2},
+    {day:'Thu',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Boniface',className:'All Levels - Variations',students:["Eugene Chan","Melody CAI","Miyu"],count:3},
+    {day:'Fri',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface Ho',className:'Baby - Ballet Class',students:["Hailey He","Lily Abercromby"],count:2},
+    {day:'Fri',time:'16:30-18:00',studio:'Juliet',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Harper","Michelle Lee","Miyu","Sophia Bennett"],count:5},
+    {day:'Fri',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Level 1 & 2 - Ballet Class',students:["Diana","Emma Kuni","Lia Loizou"],count:3},
+    {day:'Fri',time:'18:00-19:00',studio:'Juliet',teachers:'Kike / Hernan',className:'Level 2, 3 & 6 - Contemporary',students:["Harper","Michelle Lee","Miyu"],count:3},
+    {day:'Fri',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Amber Chen","Eugene Chan","Michelle Lee","Miyu"],count:4},
+    {day:'Sat',time:'10:00-11:30',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Ballet Class',students:["Amber Chen","Melody CAI","Michelle lee","Miyu","Ngai Huen","Sakura Falipou","Scarlet Georgia Lam","Sophia","Victoria Phan","harper"],count:10},
+    {day:'Sat',time:'11:30-12:30',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Amber Chen","Melody CAI","Michelle lee","Miyu","Sakura Falipou","Sophia","Victoria Phan","harper"],count:8},
+    {day:'Sat',time:'12:30-14:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Conditioning',students:["Alejandra Duffo","Amber Chen","Kisaki Kikkawa","Melody CAI","Michelle lee","Miyu","Sakura Falipou","Scarlet Georgia Lam","Shiki Kikkawa","harper"],count:10},
+    {day:'Sat',time:'14:00-15:00',studio:'Juliet',teachers:'Boniface / Hernan',className:'Level 1 - Ballet Class',students:["Alejandra Duffo"],count:1},
+    {day:'Sat',time:'15:00-17:00',studio:'Juliet',teachers:'Kike Perez',className:'Level 2, 3 & 6 - Contemporary',students:["Melody CAI","Miyu"],count:2},
+    {day:'Sun',time:'11:00-12:30',studio:'Juliet + Giselle',teachers:'Hernan',className:'Level 1, 2 & 3 - Ballet Class',students:["Michelle lee","Victoria Phan"],count:2},
+    {day:'Sun',time:'12:30-14:00',studio:'Juliet + Giselle',teachers:'Hernan',className:'All Levels - Conditioning',students:["Emma Kuni","Michelle lee","Victoria Phan"],count:3},
+    {day:'Sun',time:'14:00-15:00',studio:'Juliet + Giselle',teachers:'Hernan',className:'All Levels - Variations',students:["Emma kuni","Michelle lee"],count:2}
   ];
+
+  const TERM_START = "2026-08-17";
+  const TERM_END = "2026-12-20";
+  const HOLIDAYS = ["2026-09-26", "2026-10-01", "2026-10-19"];
+  const CAPACITY = { "Juliet": 10, "Giselle": 7, "Juliet + Giselle": 16 };
+  const DAY_TO_NUM = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+
+  function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function toISO(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+
+  // Expand each weekly group template into every real date it occurs across the term
+  function expandGroupRows(templates) {
+    const start = new Date(TERM_START + "T12:00:00");
+    const end = new Date(TERM_END + "T12:00:00");
+    const expanded = [];
+    templates.forEach(t => {
+      const targetDay = DAY_TO_NUM[t.day];
+      if (targetDay === undefined) return;
+      let d = new Date(start);
+      while (d.getDay() !== targetDay) d.setDate(d.getDate() + 1);
+      while (d <= end) {
+        const iso = toISO(d);
+        const isHoliday = HOLIDAYS.includes(iso);
+        expanded.push({
+          date: iso,
+          time: t.time,
+          studio: t.studio,
+          teachers: t.teachers,
+          className: t.className,
+          students: isHoliday ? [] : t.students,
+          count: isHoliday ? 0 : t.count,
+          capacity: CAPACITY[t.studio] || null,
+          holiday: isHoliday,
+          classType: "Group"
+        });
+        d.setDate(d.getDate() + 7);
+      }
+    });
+    return expanded;
+  }
+
+  const groupRows = expandGroupRows(groupTemplates);
 
   let currentTeacher = "all";
   let currentStatus = "all";
@@ -457,6 +489,7 @@
     return (row.teachers || '').toLowerCase().includes(teacher.toLowerCase());
   }
   function matchesStatus(row, status) {
+    if (row.classType !== "Private") return true;
     if (status === "all") return true;
     return row.status === status;
   }
@@ -464,14 +497,16 @@
     if (month === "all") return true;
     return row.date.substring(5, 7) === month;
   }
-  function matchesSearchPrivate(row, term) {
-    if (!term) return true;
-    return (row.student || '').toLowerCase().includes(term.toLowerCase());
+  function matchesClassType(row, type) {
+    if (type === "all") return true;
+    return row.classType === type;
   }
-  function matchesSearchGroup(row, term) {
+  function matchesSearch(row, term) {
     if (!term) return true;
-    if ((row.className || '').toLowerCase().includes(term.toLowerCase())) return true;
-    return (row.students || []).some(s => s.toLowerCase().includes(term.toLowerCase()));
+    const t = term.toLowerCase();
+    if (row.classType === "Private") return (row.student || '').toLowerCase().includes(t);
+    if ((row.className || '').toLowerCase().includes(t)) return true;
+    return (row.students || []).some(s => s.toLowerCase().includes(t));
   }
   function formatDate(iso) {
     const d = new Date(iso + "T12:00:00");
@@ -479,116 +514,88 @@
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
     return days[d.getDay()] + " " + d.getDate() + " " + months[d.getMonth()];
   }
-  const dayOrder = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
-  const dayFull = { Mon: "Monday", Tue: "Tuesday", Wed: "Wednesday", Thu: "Thursday", Fri: "Friday", Sat: "Saturday", Sun: "Sunday" };
 
-  function renderPrivateSection(rows) {
-    if (rows.length === 0) return '';
+  function renderPrivateCard(r) {
+    const statusClass = (r.status || '').toLowerCase();
+    const isEmpty = !r.student;
+    const cardExtra = statusClass === "confirmed" ? " confirmed" : (statusClass === "available" ? " available" : "");
+    return '<div class="card' + cardExtra + '">' +
+      '<div class="card-left">' +
+        '<div class="time">' + r.time + ' · ' + r.studio + '</div>' +
+        '<div class="meta">' + r.teachers + '</div>' +
+        '<div class="student ' + (isEmpty ? "empty" : "") + '">' + (isEmpty ? "— available —" : r.student) + '</div>' +
+        (r.notes ? '<div class="meta" style="margin-top:4px">' + r.notes + '</div>' : '') +
+      '</div>' +
+      '<div class="badge ' + statusClass + '">' + r.status + '</div>' +
+    '</div>';
+  }
+
+  function renderGroupCard(r) {
+    const cardExtra = r.holiday ? " holiday" : (r.count > 0 ? " confirmed" : " available");
+    const capacityLabel = r.capacity ? (r.count + '/' + r.capacity + ' booked') : (r.count + ' booked');
+    let bodyHtml;
+    if (r.holiday) {
+      bodyHtml = '<div class="holiday-note">No class — Public Holiday</div>';
+    } else if (r.students && r.students.length) {
+      bodyHtml = '<ul class="student-list">' + r.students.map(s => '<li>' + s + '</li>').join('') + '</ul>';
+    } else {
+      bodyHtml = '<div class="student empty">No students enrolled</div>';
+    }
+    return '<div class="card' + cardExtra + '">' +
+      '<div class="card-left">' +
+        '<div class="time">' + r.time + ' ' + r.className + ' (' + r.studio + ')</div>' +
+        '<div class="meta">' + r.teachers + '</div>' +
+        bodyHtml +
+      '</div>' +
+      (r.holiday ? '' : '<div class="badge count' + (r.count === 0 ? ' empty' : '') + '">' + capacityLabel + '</div>') +
+    '</div>';
+  }
+
+  function render() {
+    const allRows = [...privateRows, ...groupRows].filter(r =>
+      matchesClassType(r, currentClassType) &&
+      matchesTeacher(r, currentTeacher) &&
+      matchesStatus(r, currentStatus) &&
+      matchesMonth(r, currentMonth) &&
+      matchesSearch(r, searchTerm)
+    );
+
+    const privateCount = allRows.filter(r => r.classType === "Private").length;
+    const groupCount = allRows.filter(r => r.classType === "Group").length;
+    const confirmed = allRows.filter(r => r.classType === "Private" && r.status === "Confirmed").length;
+    const tbc = allRows.filter(r => r.classType === "Private" && r.status === "TBC").length;
+    const available = allRows.filter(r => r.classType === "Private" && r.status === "Available").length;
+
+    let statsHtml = "<span><strong>" + allRows.length + "</strong> shown</span>";
+    if (currentClassType !== "Group") {
+      statsHtml += "<span><strong>" + confirmed + "</strong> confirmed</span>" +
+        "<span><strong>" + tbc + "</strong> TBC</span>" +
+        "<span><strong>" + available + "</strong> available</span>";
+    }
+    document.getElementById("stats").innerHTML = statsHtml;
+
+    document.getElementById("statusFilters").style.display = currentClassType === "Group" ? "none" : "flex";
+
+    if (allRows.length === 0) {
+      document.getElementById("list").innerHTML = '<div class="empty-state"><h3>No classes match</h3><p>Try changing the filters</p></div>';
+      return;
+    }
+
     const groups = {};
-    rows.forEach(r => {
+    allRows.forEach(r => {
       if (!groups[r.date]) groups[r.date] = [];
       groups[r.date].push(r);
     });
     const sortedDates = Object.keys(groups).sort();
-    let html = '<div class="section-header">Private Classes</div>';
+    let html = "";
     sortedDates.forEach(date => {
       html += '<div class="day-group"><div class="day-header">' + formatDate(date) + '</div>';
-      groups[date].forEach(r => {
-        const statusClass = (r.status || '').toLowerCase();
-        const isEmpty = !r.student;
-        const cardExtra = statusClass === "confirmed" ? " confirmed" : (statusClass === "available" ? " available" : "");
-        html += '<div class="card' + cardExtra + '">' +
-          '<div class="card-left">' +
-            '<div class="time">' + r.time + ' · ' + r.studio + '</div>' +
-            '<div class="meta">' + r.teachers + '</div>' +
-            '<div class="student ' + (isEmpty ? "empty" : "") + '">' + (isEmpty ? "— available —" : r.student) + '</div>' +
-            (r.notes ? '<div class="meta" style="margin-top:4px">' + r.notes + '</div>' : '') +
-          '</div>' +
-          '<div class="badge ' + statusClass + '">' + r.status + '</div>' +
-        '</div>';
+      groups[date].sort((a, b) => a.time.localeCompare(b.time)).forEach(r => {
+        html += r.classType === "Private" ? renderPrivateCard(r) : renderGroupCard(r);
       });
       html += '</div>';
     });
-    return html;
-  }
-
-  function renderGroupSection(rows) {
-    if (rows.length === 0) return '';
-    const sorted = [...rows].sort((a, b) => (dayOrder[a.day] - dayOrder[b.day]) || a.time.localeCompare(b.time));
-    const groups = {};
-    sorted.forEach(r => {
-      if (!groups[r.day]) groups[r.day] = [];
-      groups[r.day].push(r);
-    });
-    let html = '<div class="section-header">Group Classes</div>';
-    Object.keys(groups).sort((a, b) => dayOrder[a] - dayOrder[b]).forEach(day => {
-      html += '<div class="day-group"><div class="day-header">' + dayFull[day] + '</div>';
-      groups[day].forEach(r => {
-        const isEmpty = r.count === 0;
-        const cardExtra = r.holidayNote ? " holiday" : (r.count > 0 ? " confirmed" : " available");
-        const studentListHtml = r.students && r.students.length
-          ? '<ul class="student-list">' + r.students.map(s => '<li>' + s + '</li>').join('') + '</ul>'
-          : '<div class="student empty">— no students —</div>';
-        html += '<div class="card' + cardExtra + '">' +
-          '<div class="card-left">' +
-            '<div class="time">' + r.time + ' · ' + r.studio + '</div>' +
-            '<div class="meta">' + r.teachers + '</div>' +
-            '<div class="class-name">' + r.className + '</div>' +
-            studentListHtml +
-            (r.holidayNote ? '<div class="holiday-note">' + r.holidayNote + '</div>' : '') +
-          '</div>' +
-          '<div class="badge count' + (isEmpty ? ' empty' : '') + '">' + r.count + ' booked</div>' +
-        '</div>';
-      });
-      html += '</div>';
-    });
-    return html;
-  }
-
-  function render() {
-    const filteredPrivate = privateRows.filter(r =>
-      matchesTeacher(r, currentTeacher) &&
-      matchesStatus(r, currentStatus) &&
-      matchesMonth(r, currentMonth) &&
-      matchesSearchPrivate(r, searchTerm)
-    );
-    const filteredGroup = groupRows.filter(r =>
-      matchesTeacher(r, currentTeacher) &&
-      matchesSearchGroup(r, searchTerm)
-    );
-
-    const showPrivate = currentClassType === "all" || currentClassType === "Private";
-    const showGroup = currentClassType === "all" || currentClassType === "Group";
-
-    const confirmed = filteredPrivate.filter(r => r.status === "Confirmed").length;
-    const tbc = filteredPrivate.filter(r => r.status === "TBC").length;
-    const available = filteredPrivate.filter(r => r.status === "Available").length;
-    const totalGroupStudents = filteredGroup.reduce((sum, r) => sum + r.count, 0);
-
-    let statsHtml = '';
-    if (showPrivate) {
-      statsHtml += "<span><strong>" + filteredPrivate.length + "</strong> private shown</span>" +
-        "<span><strong>" + confirmed + "</strong> confirmed</span>" +
-        "<span><strong>" + tbc + "</strong> TBC</span>" +
-        "<span><strong>" + available + "</strong> available</span>";
-    }
-    if (showGroup) {
-      statsHtml += "<span><strong>" + filteredGroup.length + "</strong> group classes</span>" +
-        "<span><strong>" + totalGroupStudents + "</strong> group students</span>";
-    }
-    document.getElementById("stats").innerHTML = statsHtml;
-
-    document.getElementById("monthFilters").style.display = showPrivate ? "flex" : "none";
-    document.getElementById("statusFilters").style.display = showPrivate ? "flex" : "none";
-
-    let listHtml = '';
-    if (showGroup) listHtml += renderGroupSection(filteredGroup);
-    if (showPrivate) listHtml += renderPrivateSection(filteredPrivate);
-
-    if (!listHtml) {
-      listHtml = '<div class="empty-state"><h3>No classes match</h3><p>Try changing the filters</p></div>';
-    }
-    document.getElementById("list").innerHTML = listHtml;
+    document.getElementById("list").innerHTML = html;
   }
 
   document.getElementById("classTypeFilters").addEventListener("click", e => {

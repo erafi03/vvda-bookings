@@ -190,7 +190,7 @@
       color: var(--green);
       box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.25);
     }
-    .badge.count.empty { background: var(--grey-bg); color: var(--muted); box-shadow: none; }
+    .badge.count.full { background: var(--amber-bg); color: var(--amber); box-shadow: 0 0 0 1px rgba(251, 191, 36, 0.3); }
     .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
     .empty-state h3 { font-size: 17px; margin-bottom: 6px; color: var(--text); }
     footer {
@@ -255,7 +255,7 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 24/8/2026, 1:29:35 pm
+  Updated 24/8/2026, 1:46:01 pm
 </footer>
 
 <script>
@@ -587,7 +587,7 @@ const capacityLabel = r.capacity
         '<div class="meta">' + r.teachers + '</div>' +
         bodyHtml +
       '</div>' +
-      (r.holiday ? '' : '<div class="badge count' + (r.count === 0 ? ' empty' : '') + '">' + capacityLabel + '</div>') +
+     (r.holiday ? '' : '<div class="badge count' + (r.count === 0 ? ' empty' : (r.capacity && r.count >= r.capacity ? ' full' : '')) + '">' + capacityLabel + '</div>') +
     '</div>';
   }
 

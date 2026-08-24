@@ -216,6 +216,13 @@
   <button class="filter-btn" data-classtype="Private">Private Classes</button>
 </div>
 
+<div class="filters" id="dayFilters">
+  <button class="filter-btn active" data-day="today">Today</button>
+  <button class="filter-btn" data-day="tomorrow">Tomorrow</button>
+  <button class="filter-btn" data-day="week">This Week</button>
+  <button class="filter-btn" data-day="all">All Dates</button>
+</div>
+
 <div class="month-filters" id="monthFilters">
   <button class="filter-btn active" data-month="all">All</button>
   <button class="filter-btn" data-month="08">Aug</button>
@@ -249,7 +256,7 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 23/8/2026, 6:31:26 pm
+  Updated 24/8/2026, 9:58:34 am
 </footer>
 
 <script>
@@ -411,7 +418,6 @@
     {day:'Tue',time:'17:30-19:00',studio:'Giselle',teachers:'Hernan',className:'Level 1 & 2 - Ballet Class',students:["Amber Chen","Lia Loizou"],count:2},
     {day:'Tue',time:'18:00-19:00',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Melody CAI","Michelle Lee","Miyu","Ngai Huen"],count:4},
     {day:'Tue',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu"],count:3},
-    {day:'Wed',time:'16:00-17:00',studio:'Juliet',teachers:'Hernan / Venus',className:'Private - Ballet/Pas de Deux',students:["Cheryl Sum Yu Cheng"],count:1},
     {day:'Wed',time:'17:00-18:30',studio:'Giselle',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Hannah Walker","Michelle Lee","Miyu","harper"],count:5},
     {day:'Wed',time:'17:00-18:30',studio:'Juliet',teachers:'Venus Villa',className:'Level 1 & 2 - Ballet Class',students:["Alicia Chung","Amber Chen","Audrey Au","Cheryl Sum Yu Cheng","Emma kuni","Evelyn Tsz Yin Lam","Hayley Wan","Kisaki Kikkawa","Shiki Kikkawa"],count:9},
     {day:'Wed',time:'18:30-19:30',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Cheryl Sum Yu Cheng","Hannah Walker","Miyu","harper"],count:4},
@@ -480,6 +486,7 @@
 
   const groupRows = expandGroupRows(groupTemplates);
 
+  let currentDayFilter = "today";
   let currentTeacher = "all";
   let currentStatus = "all";
   let currentMonth = "all";
@@ -502,6 +509,23 @@
     if (type === "all") return true;
     return row.classType === type;
   }
+  function matchesDayFilter(row, filter) {
+    if (filter === "all") return true;
+    const now = new Date();
+    const todayISO = toISO(now);
+    if (filter === "today") return row.date === todayISO;
+    if (filter === "tomorrow") {
+      const t = new Date(now); t.setDate(t.getDate() + 1);
+      return row.date === toISO(t);
+    }
+    if (filter === "week") {
+      const start = new Date(now); start.setHours(0,0,0,0);
+      const end = new Date(start); end.setDate(start.getDate() + 7);
+      const rowDate = new Date(row.date + "T12:00:00");
+      return rowDate >= start && rowDate <= end;
+    }
+    return true;
+  }
   function matchesSearch(row, term) {
     if (!term) return true;
     const t = term.toLowerCase();
@@ -522,7 +546,7 @@
     const cardExtra = statusClass === "confirmed" ? " confirmed" : (statusClass === "available" ? " available" : "");
     return '<div class="card' + cardExtra + '">' +
       '<div class="card-left">' +
-        '<div class="time">' + r.time + ' · ' + r.studio + '</div>' +
+        '<div class="time">' + r.time + ' Private Class (' + r.studio + ')</div>' +
         '<div class="meta">' + r.teachers + '</div>' +
         '<div class="student ' + (isEmpty ? "empty" : "") + '">' + (isEmpty ? "— available —" : r.student) + '</div>' +
         (r.notes ? '<div class="meta" style="margin-top:4px">' + r.notes + '</div>' : '') +
@@ -554,6 +578,7 @@
 
   function render() {
     const allRows = [...privateRows, ...groupRows].filter(r =>
+      matchesDayFilter(r, currentDayFilter) &&
       matchesClassType(r, currentClassType) &&
       matchesTeacher(r, currentTeacher) &&
       matchesStatus(r, currentStatus) &&
@@ -598,6 +623,13 @@
     document.querySelectorAll("#classTypeFilters .filter-btn").forEach(b => b.classList.remove("active"));
     e.target.classList.add("active");
     currentClassType = e.target.dataset.classtype;
+    render();
+  });
+  document.getElementById("dayFilters").addEventListener("click", e => {
+    if (!e.target.classList.contains("filter-btn")) return;
+    document.querySelectorAll("#dayFilters .filter-btn").forEach(b => b.classList.remove("active"));
+    e.target.classList.add("active");
+    currentDayFilter = e.target.dataset.day;
     render();
   });
   document.getElementById("monthFilters").addEventListener("click", e => {

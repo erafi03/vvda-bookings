@@ -255,7 +255,7 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 24/8/2026, 12:54:47 pm
+  Updated 24/8/2026, 1:29:35 pm
 </footer>
 
 <script>
@@ -472,6 +472,9 @@
   const TERM_END = "2026-12-20";
   const HOLIDAYS = ["2026-09-26", "2026-10-01", "2026-10-19"];
   const CAPACITY = { "Juliet": 10, "Giselle": 7, "Juliet + Giselle": 16 };
+  const CAPACITY_OVERRIDES = {
+  "Sat|11:30-12:30|All Levels - Variations": 9
+};
   const DAY_TO_NUM = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
   const NUM_TO_DAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -501,7 +504,7 @@
           className: t.className,
           students: isHoliday ? [] : t.students,
           count: finalCount,
-          capacity: CAPACITY[t.studio] || null,
+          capacity: CAPACITY_OVERRIDES[t.day + '|' + t.time + '|' + t.className] || CAPACITY[t.studio] || null,
           holiday: isHoliday,
           status: isHoliday ? "Cancelled" : (finalCount > 0 ? "Confirmed" : "Available"),
           classType: "Group"
@@ -567,7 +570,9 @@
 
   function renderGroupCard(r) {
     const cardExtra = r.holiday ? " holiday" : (r.count > 0 ? " confirmed" : " available");
-    const capacityLabel = r.capacity ? (r.count + '/' + r.capacity + ' booked') : (r.count + ' booked');
+const capacityLabel = r.capacity
+  ? (r.count >= r.capacity ? 'Fully Booked (' + r.count + '/' + r.capacity + ')' : r.count + '/' + r.capacity + ' booked')
+  : (r.count + ' booked');
     let bodyHtml;
     if (r.holiday) {
       bodyHtml = '<div class="holiday-note">No class — Public Holiday</div>';

@@ -59,7 +59,7 @@
       flex-shrink: 0;
       border-radius: 8px;
     }
-    .filters, .status-filters, .month-filters, .classtype-filters {
+    .filters, .classtype-filters {
       display: flex;
       gap: 8px;
       padding: 10px 16px 8px;
@@ -68,10 +68,8 @@
       -webkit-overflow-scrolling: touch;
       scrollbar-width: none;
     }
-    .filters::-webkit-scrollbar, .status-filters::-webkit-scrollbar, .month-filters::-webkit-scrollbar, .classtype-filters::-webkit-scrollbar { display: none; }
+    .filters::-webkit-scrollbar, .classtype-filters::-webkit-scrollbar { display: none; }
     .classtype-filters { padding-top: 12px; padding-bottom: 8px; }
-    .month-filters { padding-top: 10px; padding-bottom: 6px; }
-    .status-filters { padding-top: 0; padding-bottom: 14px; border-bottom: 1px solid var(--card-border); }
     .filter-btn {
       flex-shrink: 0;
       padding: 8px 15px;
@@ -89,18 +87,25 @@
       border-color: var(--accent);
       font-weight: 600;
     }
-    .search-box { padding: 12px 16px; background: #18181f; }
-    .search-box input {
-      width: 100%;
-      padding: 12px 16px;
+    .controls-row {
+      display: flex;
+      gap: 10px;
+      padding: 10px 16px 14px;
+      background: #18181f;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .controls-row select, .controls-row input {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 14px;
       border-radius: 12px;
       border: 1px solid var(--card-border);
       background: var(--card);
       color: var(--text);
-      font-size: 15px;
+      font-size: 14px;
       outline: none;
     }
-    .search-box input::placeholder { color: var(--muted); }
+    .controls-row input::placeholder { color: var(--muted); }
     .stats {
       display: flex;
       gap: 16px;
@@ -216,47 +221,41 @@
   <button class="filter-btn" data-classtype="Private">Private Classes</button>
 </div>
 
-<div class="filters" id="dayFilters">
-  <button class="filter-btn active" data-day="today">Today</button>
-  <button class="filter-btn" data-day="tomorrow">Tomorrow</button>
-  <button class="filter-btn" data-day="week">This Week</button>
-  <button class="filter-btn" data-day="all">All Dates</button>
-</div>
-
-<div class="month-filters" id="monthFilters">
-  <button class="filter-btn active" data-month="all">All</button>
-  <button class="filter-btn" data-month="08">Aug</button>
-  <button class="filter-btn" data-month="09">Sep</button>
-  <button class="filter-btn" data-month="10">Oct</button>
-  <button class="filter-btn" data-month="11">Nov</button>
-  <button class="filter-btn" data-month="12">Dec</button>
+<div class="filters" id="weekdayFilters">
+  <button class="filter-btn" data-weekday="all">All</button>
+  <button class="filter-btn" data-weekday="Mon">Mon</button>
+  <button class="filter-btn" data-weekday="Tue">Tue</button>
+  <button class="filter-btn" data-weekday="Wed">Wed</button>
+  <button class="filter-btn" data-weekday="Thu">Thu</button>
+  <button class="filter-btn" data-weekday="Fri">Fri</button>
+  <button class="filter-btn" data-weekday="Sat">Sat</button>
+  <button class="filter-btn" data-weekday="Sun">Sun</button>
 </div>
 
 <div class="filters" id="teacherFilters">
-  <button class="filter-btn active" data-teacher="all">All Teachers</button>
+  <button class="filter-btn active" data-teacher="all">All</button>
   <button class="filter-btn" data-teacher="Venus">Venus</button>
   <button class="filter-btn" data-teacher="Boniface">Boniface</button>
   <button class="filter-btn" data-teacher="Hernan">Hernan</button>
   <button class="filter-btn" data-teacher="Kike">Kike</button>
 </div>
 
-<div class="status-filters" id="statusFilters">
-  <button class="filter-btn active" data-status="all">All</button>
-  <button class="filter-btn" data-status="Confirmed">Confirmed</button>
-  <button class="filter-btn" data-status="TBC">TBC</button>
-  <button class="filter-btn" data-status="Available">Available</button>
-  <button class="filter-btn" data-status="Cancelled">Cancelled</button>
-</div>
-
-<div class="search-box">
-  <input type="search" id="searchInput" placeholder="Search student name..." />
+<div class="controls-row">
+  <select id="statusSelect">
+    <option value="Confirmed" selected>Confirmed</option>
+    <option value="Available">Available</option>
+    <option value="TBC">TBC</option>
+    <option value="Cancelled">Cancelled</option>
+    <option value="all">All statuses</option>
+  </select>
+  <input type="search" id="searchInput" placeholder="Search student..." />
 </div>
 
 <div class="stats" id="stats"></div>
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 24/8/2026, 9:58:34 am
+  Updated 24/8/2026, 10:27:07 am
 </footer>
 
 <script>
@@ -447,9 +446,11 @@
   const HOLIDAYS = ["2026-09-26", "2026-10-01", "2026-10-19"];
   const CAPACITY = { "Juliet": 10, "Giselle": 7, "Juliet + Giselle": 16 };
   const DAY_TO_NUM = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 };
+  const NUM_TO_DAY = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
   function toISO(d) { return d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()); }
+  function weekdayOf(iso) { return NUM_TO_DAY[new Date(iso + "T12:00:00").getDay()]; }
 
   // Expand each weekly group template into every real date it occurs across the term
   function expandGroupRows(templates) {
@@ -486,10 +487,9 @@
 
   const groupRows = expandGroupRows(groupTemplates);
 
-  let currentDayFilter = "today";
+  let currentWeekday = weekdayOf(toISO(new Date()));
   let currentTeacher = "all";
-  let currentStatus = "all";
-  let currentMonth = "all";
+  let currentStatus = "Confirmed";
   let currentClassType = "all";
   let searchTerm = "";
 
@@ -501,30 +501,13 @@
     if (status === "all") return true;
     return row.status === status;
   }
-  function matchesMonth(row, month) {
-    if (month === "all") return true;
-    return row.date.substring(5, 7) === month;
-  }
   function matchesClassType(row, type) {
     if (type === "all") return true;
     return row.classType === type;
   }
-  function matchesDayFilter(row, filter) {
-    if (filter === "all") return true;
-    const now = new Date();
-    const todayISO = toISO(now);
-    if (filter === "today") return row.date === todayISO;
-    if (filter === "tomorrow") {
-      const t = new Date(now); t.setDate(t.getDate() + 1);
-      return row.date === toISO(t);
-    }
-    if (filter === "week") {
-      const start = new Date(now); start.setHours(0,0,0,0);
-      const end = new Date(start); end.setDate(start.getDate() + 7);
-      const rowDate = new Date(row.date + "T12:00:00");
-      return rowDate >= start && rowDate <= end;
-    }
-    return true;
+  function matchesWeekday(row, weekday) {
+    if (weekday === "all") return true;
+    return weekdayOf(row.date) === weekday;
   }
   function matchesSearch(row, term) {
     if (!term) return true;
@@ -578,11 +561,10 @@
 
   function render() {
     const allRows = [...privateRows, ...groupRows].filter(r =>
-      matchesDayFilter(r, currentDayFilter) &&
+      matchesWeekday(r, currentWeekday) &&
       matchesClassType(r, currentClassType) &&
       matchesTeacher(r, currentTeacher) &&
       matchesStatus(r, currentStatus) &&
-      matchesMonth(r, currentMonth) &&
       matchesSearch(r, searchTerm)
     );
 
@@ -625,18 +607,11 @@
     currentClassType = e.target.dataset.classtype;
     render();
   });
-  document.getElementById("dayFilters").addEventListener("click", e => {
+  document.getElementById("weekdayFilters").addEventListener("click", e => {
     if (!e.target.classList.contains("filter-btn")) return;
-    document.querySelectorAll("#dayFilters .filter-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("#weekdayFilters .filter-btn").forEach(b => b.classList.remove("active"));
     e.target.classList.add("active");
-    currentDayFilter = e.target.dataset.day;
-    render();
-  });
-  document.getElementById("monthFilters").addEventListener("click", e => {
-    if (!e.target.classList.contains("filter-btn")) return;
-    document.querySelectorAll("#monthFilters .filter-btn").forEach(b => b.classList.remove("active"));
-    e.target.classList.add("active");
-    currentMonth = e.target.dataset.month;
+    currentWeekday = e.target.dataset.weekday;
     render();
   });
   document.getElementById("teacherFilters").addEventListener("click", e => {
@@ -646,17 +621,18 @@
     currentTeacher = e.target.dataset.teacher;
     render();
   });
-  document.getElementById("statusFilters").addEventListener("click", e => {
-    if (!e.target.classList.contains("filter-btn")) return;
-    document.querySelectorAll("#statusFilters .filter-btn").forEach(b => b.classList.remove("active"));
-    e.target.classList.add("active");
-    currentStatus = e.target.dataset.status;
+  document.getElementById("statusSelect").addEventListener("change", e => {
+    currentStatus = e.target.value;
     render();
   });
   document.getElementById("searchInput").addEventListener("input", e => {
     searchTerm = e.target.value;
     render();
   });
+
+  // Set the weekday filter button to match today's weekday on load
+  const initBtn = document.querySelector('#weekdayFilters .filter-btn[data-weekday="' + currentWeekday + '"]');
+  if (initBtn) initBtn.classList.add("active");
 
   render();
 </script>

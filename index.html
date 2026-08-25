@@ -255,7 +255,7 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 25/8/2026, 4:58:26 pm
+  Updated 25/8/2026, 6:55:12 pm
 </footer>
 
 <script>
@@ -428,9 +428,9 @@
   const groupTemplates = [
     {day:'Mon',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface',className:'Baby - Ballet Class',students:[],count:0},
     {day:'Mon',time:'16:30-17:30',studio:'Giselle',teachers:'Hernan',className:'All Levels - Conditioning',students:[],count:0},
-    {day:'Mon',time:'16:30-18:00',studio:'Juliet',teachers:'Venus / Boniface',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Melody","Michelle Lee","Miyu","Scarlet Georgia Lam","Venusita","Victoria Phan"],count:7},
+    {day:'Mon',time:'16:30-18:00',studio:'Juliet',teachers:'Venus / Boniface',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Melody","Michelle Lee","Miyu","Scarlet Georgia Lam","Venusita"],count:6},
     {day:'Mon',time:'17:30-19:00',studio:'Giselle',teachers:'Boniface / Hernan',className:'Level 1 & 2 - Ballet Class',students:["Evelyn Tsz Yin Lam","Kisaki Kikkawa","Shiki Kikkawa"],count:3},
-    {day:'Mon',time:'18:00-19:00',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Pointe Class',students:["Michelle lee","Miyu","Venusita"],count:3},
+    {day:'Mon',time:'18:00-19:00',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Pointe Class',students:["Michelle lee","Miyu","Venusita","Victoria Phan"],count:4},
     {day:'Mon',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Eugene Chan","Michelle lee","Miyu","Venusita"],count:4},
     {day:'Mon',time:'19:30-21:00',studio:'Giselle',teachers:'Boniface',className:'Adult - Ballet Class',students:[],count:0},
     {day:'Tue',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface',className:'Baby - Ballet Class',students:[],count:0},
@@ -441,17 +441,17 @@
     {day:'Tue',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Cheryl Sum Yu Cheng","Eugene Chan","Michelle Lee","Miyu","Venusita"],count:5},
     {day:'Wed',time:'17:00-18:30',studio:'Juliet',teachers:'Venus Villa',className:'Level 1 & 2 - Ballet Class',students:["Alicia Chung","Amber Chen","Audrey Au","Cheryl Sum Yu Cheng","Emma kuni","Evelyn Tsz Yin Lam","Hayley Wan","Kisaki Kikkawa","Shiki Kikkawa"],count:9},
     {day:'Wed',time:'17:00-18:30',studio:'Giselle',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Hannah Walker","Michelle Lee","Miyu","Sakura Falipou","Venusita","harper"],count:7},
-    {day:'Wed',time:'18:30-19:30',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Cheryl Sum Yu Cheng","Hannah Walker","Miyu","Venusita","harper"],count:5},
     {day:'Wed',time:'18:30-19:30',studio:'',teachers:'Hernan',className:'Level 1, 2 & 3 - Contemporary Basics',students:["Eugene Chan","Michelle Lee"],count:2},
+    {day:'Wed',time:'18:30-19:30',studio:'Juliet',teachers:'Venus Villa',className:'All Levels - Pointe Class',students:["Cheryl Sum Yu Cheng","Hannah Walker","Miyu","Venusita","harper"],count:5},
     {day:'Wed',time:'19:30-21:00',studio:'Juliet + Giselle',teachers:'Hernan / Venus',className:'All Levels - Variations',students:["Eugene Chan","Michelle Lee","Miyu","Ngai Huen","Sakura Falipou","Venusita","harper"],count:7},
     {day:'Thu',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface',className:'Baby - Ballet Class',students:[],count:0},
-    {day:'Thu',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Alejandra Duffo","Audrey","Bethany Rachelle Luing","Francesca Lumsdaine","Sophia Yu","Sophia Zhang"],count:6},
     {day:'Thu',time:'16:30-18:00',studio:'Juliet',teachers:'Venus Villa',className:'Level 2, 3 & 6 - Ballet Class',students:["Eugene Chan","Hale Ho","Miyu","Sophia","Venusita"],count:5},
+    {day:'Thu',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Beginners - Ballet Class',students:["Alejandra Duffo","Audrey","Bethany Rachelle Luing","Francesca Lumsdaine","Sophia Yu","Sophia Zhang"],count:6},
     {day:'Thu',time:'18:00-19:00',studio:'Juliet + Giselle',teachers:'Boniface / Venus',className:'All Levels - Conditioning',students:["Eugene Chan","Miyu","Venusita"],count:3},
     {day:'Thu',time:'19:00-21:00',studio:'Juliet + Giselle',teachers:'Venus / Boniface',className:'All Levels - Variations',students:["Eugene Chan","Melody CAI","Miyu","Venusita"],count:4},
     {day:'Fri',time:'15:30-16:30',studio:'Giselle',teachers:'Boniface Ho',className:'Baby - Ballet Class',students:["Hailey He","Lily Abercromby"],count:2},
-    {day:'Fri',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Level 1 & 2 - Ballet Class',students:["Angeline Fan","Chloe Fan","Diana","Emma Kuni","Lia Loizou"],count:5},
     {day:'Fri',time:'16:30-18:00',studio:'Juliet',teachers:'Hernan',className:'Level 3 & 6 - Ballet Class',students:["Eugene Chan","Harper","Michelle Lee","Miyu","Sophia Bennett","Venusita"],count:6},
+    {day:'Fri',time:'16:30-18:00',studio:'Giselle',teachers:'Boniface Ho',className:'Level 1 & 2 - Ballet Class',students:["Angeline Fan","Chloe Fan","Diana","Emma Kuni","Lia Loizou"],count:5},
     {day:'Fri',time:'18:00-19:00',studio:'Juliet',teachers:'Kike / Hernan',className:'Level 2, 3 & 6 - Contemporary',students:["Harper","Michelle Lee","Miyu"],count:3},
     {day:'Fri',time:'18:00-19:00',studio:'Giselle',teachers:'Venus',className:'All Levels - Group Dance',students:[],count:0},
     {day:'Fri',time:'19:00-20:30',studio:'Juliet',teachers:'Venus / Hernan',className:'All Levels - Variations',students:["Amber Chen","Eugene Chan","Michelle Lee","Miyu","Venusita"],count:5},

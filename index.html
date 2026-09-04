@@ -255,7 +255,7 @@
 <div class="list" id="list"></div>
 
 <footer>
-  Updated 4/9/2026, 10:43:59 am
+  Updated 4/9/2026, 2:26:26 pm
 </footer>
 
 <script>
@@ -622,8 +622,9 @@ const capacityLabel = r.capacity
     '</div>';
   }
 
-  function render() {
+ function render() {
     const allRows = [...privateRows, ...groupRows].filter(r =>
+      r.date >= toISO(new Date()) &&
       matchesWeekday(r, currentWeekday) &&
       matchesClassType(r, currentClassType) &&
       matchesTeacher(r, currentTeacher) &&
